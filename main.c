@@ -32,8 +32,32 @@ int isfile(char * path) {
     }
 }
 
+void myls(char * path) {
+    DIR * stream = opendir(path);
+    struct dirent * head;
+    struct node * dirs = NULL;
+    struct node * files = NULL;
+    int size = 0;
 
+    while ((head = readdir(stream)) != NULL) {
+        int status = isfile(head->d_name);
+        if (status == 0) {
+            dirs = insert_front(dirs, head->d_name);
+        } else {
+            files = insert_front(files, head->d_name);
+            size += status;
+        }
+    }
+    printf("Total size of regular files: %d\n", size);
+    printf("Directories:\n");
+    print_list(dirs);
+    printf("Regular files:\n");
+    print_list(files);
+
+    free_list(dirs);
+    free_list(files);
+}
 
 int main() {
-    struct dirent * stream = opendir('.');
+    myls(".");
 }
