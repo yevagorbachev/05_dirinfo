@@ -2,6 +2,7 @@
 #include<stdlib.h>
 
 #include<fcntl.h>
+#include<unistd.h>
 #include<dirent.h>
 #include<sys/stat.h>
 #include<sys/types.h>
@@ -17,8 +18,22 @@ void print_metric(long num) {
     printf("%ld %s\n", num, prefs[i]);
 }
 
+int isfile(char * path) {
+    struct stat meta;
+    if (stat(path, &meta) < 0) {
+        printf("Error #%d when checking metadata of %s: %s\n", errno, path, strerror(errno));
+    }
+    if (meta.st_mode > 041000) {
+        return meta.st_size;
+    } else {
+        return 0;
+    }
+}
+
 
 
 int main() {
-    
+    char * t1 = "testdir";
+    char * t2 = ".bashrc";
+    printf("%s is%sa file\n", dir, (isfile(dir) != 0) ? " " : " not ");
 }
