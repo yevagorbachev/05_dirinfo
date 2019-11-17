@@ -11,6 +11,8 @@
 #include<string.h>
 #include<time.h>
 
+#include "llist.h"
+
 void print_metric(long num) {
     char * prefs[5] = {"B","KB","MB","GB","TB"};
     int i;
@@ -33,7 +35,5 @@ int isfile(char * path) {
 
 
 int main() {
-    char * t1 = "testdir";
-    char * t2 = ".bashrc";
-    printf("%s is%sa file\n", dir, (isfile(dir) != 0) ? " " : " not ");
+    struct dirent * stream = opendir('.');
 }
