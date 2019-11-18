@@ -48,7 +48,8 @@ void myls(char * path) {
             size += status;
         }
     }
-    printf("Total size of regular files: %d\n", size);
+    printf("Total size of regular files:");
+    print_metric(size);
     printf("Directories:\n");
     print_list(dirs);
     printf("Regular files:\n");
