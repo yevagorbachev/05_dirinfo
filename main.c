@@ -42,11 +42,17 @@ void myls(char * path) {
     struct node * dirs = NULL;
     struct node * files = NULL;
     int size = 0;
+
     char pathbuffer[512];
+    pathbuffer[0] = '\0';
     strcat(pathbuffer, path);
-    strcat(pathbuffer, "/");
+    if (pathbuffer[strlen(pathbuffer) - 1] != '/') {
+        strcat(pathbuffer, "/");
+    }
+
     while ((head = readdir(stream)) != NULL) {
         strcat(pathbuffer, head->d_name);
+
         int status = isfile(pathbuffer);
         if (status == 0) {
             dirs = insert_front(dirs, pathbuffer);
@@ -54,8 +60,10 @@ void myls(char * path) {
             files = insert_front(files, pathbuffer);
             size += status;
         }
+        
         pathbuffer[strlen(pathbuffer) - strlen(head->d_name)] = '\0';
     }
+
     printf("Total size of regular files:");
     print_metric(size);
     printf("Directories:\n");
@@ -73,8 +81,11 @@ int main(int argc, char * argv[]) {
         char dir[256];
         fgets(dir, 256, stdin);
         dir[strlen(dir) - 1] = '\0';
+        printf("%s\n", dir);
         myls(dir);
     } else {
+        printf("%s\n", argv[1]);
         myls(argv[1]);
     }
+    /**/
 }
