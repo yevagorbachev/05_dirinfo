@@ -42,15 +42,19 @@ void myls(char * path) {
     struct node * dirs = NULL;
     struct node * files = NULL;
     int size = 0;
-
+    char pathbuffer[512];
+    strcat(pathbuffer, path);
+    strcat(pathbuffer, "/");
     while ((head = readdir(stream)) != NULL) {
-        int status = isfile(head->d_name);
+        strcat(pathbuffer, head->d_name);
+        int status = isfile(pathbuffer);
         if (status == 0) {
-            dirs = insert_front(dirs, head->d_name);
+            dirs = insert_front(dirs, pathbuffer);
         } else {
-            files = insert_front(files, head->d_name);
+            files = insert_front(files, pathbuffer);
             size += status;
         }
+        pathbuffer[strlen(pathbuffer) - strlen(head->d_name)] = '\0';
     }
     printf("Total size of regular files:");
     print_metric(size);
