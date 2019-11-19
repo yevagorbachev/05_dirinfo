@@ -65,7 +65,11 @@ void myls(char * path) {
 
 int main(int argc, char * argv[]) {
     if (argc == 1) {
-        myls(".");
+        printf("Please enter a directory to scan:\n> ");
+        char dir[256];
+        fgets(dir, 256, stdin);
+        dir[strlen(dir) - 1] = '\0';
+        myls(dir);
     } else {
         myls(argv[1]);
     }
