@@ -33,7 +33,11 @@ int isfile(char * path) {
 }
 
 void myls(char * path) {
-    DIR * stream = opendir(path);
+    DIR * stream;
+    if ((stream = opendir(path)) == NULL) {
+        printf("Error #%d when opening directory %s: %s\n", errno, path, strerror(errno));
+        return;
+    }
     struct dirent * head;
     struct node * dirs = NULL;
     struct node * files = NULL;
