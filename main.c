@@ -58,6 +58,10 @@ void myls(char * path) {
     free_list(files);
 }
 
-int main() {
-    myls(".");
+int main(int argc, char * argv[]) {
+    if (argc == 1) {
+        myls(".");
+    } else {
+        myls(argv[1]);
+    }
 }
